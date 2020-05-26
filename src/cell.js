@@ -1,9 +1,14 @@
 class Cell {
-  constructor(row, col, cellSize) {
+  constructor(row, col, cellSize, isAlive) {
     this.row = row;
     this.col = col;
     this.cellSize = cellSize;
-    this.isAlive = row % 2 == col % 2;
+    this.isAlive = isAlive;
+  }
+
+  static newRandomCell(row, col, cellSize) {
+    const isAlive = Math.random() < 0.2; // on average, 20% of cells will be alive
+    return new Cell(row, col, cellSize, isAlive);
   }
 
   render(ctx) {

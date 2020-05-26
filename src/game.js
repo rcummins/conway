@@ -13,7 +13,7 @@ class Game {
 
     for (let row = 0; row < this.numRows; row++) {
       for (let col = 0; col < this.numCols; col++) {
-        grid[row].push(new Cell(row, col, this.cellSize));
+        grid[row].push(Cell.newRandomCell(row, col, this.cellSize));
       }
     }
 
