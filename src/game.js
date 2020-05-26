@@ -27,6 +27,14 @@ class Game {
       }
     }
   }
+
+  step() {
+    for (let row = 0; row < this.numRows; row++) {
+      for (let col = 0; col < this.numCols; col++) {
+        this.grid[row][col].isAlive = !this.grid[row][col].isAlive;
+      }
+    }
+  }
 }
 
 module.exports = Game;

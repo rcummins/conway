@@ -4,8 +4,14 @@ class GameView {
     this.ctx = ctx;
   }
 
-  animate() {
-    this.game.render(this.ctx);
+  start() {
+    const animateCallback = () => {
+      this.game.step();
+      this.game.render(this.ctx);
+      setTimeout(animateCallback, 300);
+    };
+
+    animateCallback();
   }
 }
 
