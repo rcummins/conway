@@ -3,10 +3,11 @@ class Cell {
     this.row = row;
     this.col = col;
     this.cellSize = cellSize;
+    this.isAlive = row % 2 == col % 2;
   }
 
   render(ctx) {
-    if (this.row % 2 == this.col % 2) {
+    if (this.isAlive) {
       ctx.fillStyle = 'pink';
     } else {
       ctx.fillStyle = 'white';
