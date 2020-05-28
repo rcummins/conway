@@ -35,6 +35,40 @@ class Game {
       }
     }
   }
+
+  cellAliveNextStep(rowAbove, rowTarget, rowBelow, idxLeft, idxTarget, idxRight) {
+    // identify the 9 cells in the neighborhood including target cell in center
+    const neighborhood = [
+      rowAbove[idxLeft],
+      rowAbove[idxTarget],
+      rowAbove[idxRight],
+      rowTarget[idxLeft],
+      rowTarget[idxTarget],
+      rowTarget[idxRight],
+      rowBelow[idxLeft],
+      rowBelow[idxTarget],
+      rowBelow[idxRight]
+    ];
+
+    // calculate the total number of currently living cells in neighborhood
+    const totalLiveCells = neighborhood.reduce((accumulator, currentCell) => {
+      if (currentCell.isAlive) {
+        return accumulator + 1;
+      } else {
+        return accumulator;
+      }
+    }, 0);
+
+    // determine whether the target cell will be alive in the next step
+    switch (totalLiveCells) {
+      case 3:
+        return true;
+      case 4:
+        return rowTarget[idxTarget].isAlive;
+      default:
+        return false;
+    }
+  }
 }
 
 module.exports = Game;
