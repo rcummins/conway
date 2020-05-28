@@ -36,6 +36,35 @@ class Game {
     }
   }
 
+  rowAliveNextStep(rowAbove, rowTarget, rowBelow) {
+    // get the index of the last cell in a row
+    const lastIdx = rowAbove.length - 1;
+
+    // initialize an array to store whether cells will be alive (true/false)
+    const aliveNextStep = [];
+
+    // determine if the left-edge cell will be alive in the next step
+    // due to edge wrapping, this depends on last column and first two columns
+    aliveNextStep.push(
+      this.cellAliveNextStep(rowAbove, rowTarget, rowBelow, lastIdx, 0, 1)
+    );
+
+    // determine if the non-edge cells will be alive in the next step
+    for (let i = 1; i < lastIdx; i++) {
+      aliveNextStep.push(
+        this.cellAliveNextStep(rowAbove, rowTarget, rowBelow, i - 1, i, i + 1)
+      );
+    }
+
+    // determine if the right-edge cell will be alive in the next step
+    // due to edge wrapping, this depends on last two columns and first column
+    aliveNextStep.push(
+      this.cellAliveNextStep(rowAbove, rowTarget, rowBelow, lastIdx - 1, lastIdx, 0)
+    );
+
+    return aliveNextStep;
+  }
+
   cellAliveNextStep(rowAbove, rowTarget, rowBelow, idxLeft, idxTarget, idxRight) {
     // identify the 9 cells in the neighborhood including target cell in center
     const neighborhood = [
