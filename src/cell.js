@@ -13,9 +13,9 @@ class Cell {
 
   render(ctx) {
     if (this.isAlive) {
-      ctx.fillStyle = 'pink';
+      ctx.fillStyle = '#ffc0cb';
     } else {
-      ctx.fillStyle = 'white';
+      ctx.fillStyle = '#c0fff4';
     }
     const xPos = this.col * this.cellSize;
     const yPos = this.row * this.cellSize;

@@ -1,3 +1,42 @@
+a {
+  color: dimgray;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button:hover {
+  background-color: gray;
+}
+
 canvas {
   display: block;
+}
+
+.fancy-button {
+  margin: 30px auto 0;
+  padding: 10px;
+  color: white;
+  background-color: darkgray;
+  border-style: none;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+form {
+  height: 200px;
+  width: 300px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  font-family: 'Rubik', sans-serif;
+}
+
+h1 {
+  font-size: 24px;
+  margin: 10px auto;
 }
