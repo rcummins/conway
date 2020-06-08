@@ -1,7 +1,8 @@
 class GameView {
-  constructor(game, ctx) {
+  constructor(game, canvasElement) {
     this.game = game;
-    this.ctx = ctx;
+    this.canvasElement = canvasElement;
+    this.ctx = canvasElement.getContext('2d');
     this.paused = false;
   }
 
@@ -13,6 +14,10 @@ class GameView {
     }
   }
 
+  setupCanvasInteractivity() {
+    this.canvasElement.addEventListener('click', this.toggleAliveDead.bind(this));
+  }
+
   setupControlPanel() {
     const playPauseButton = document.getElementById('play-pause');
     playPauseButton.addEventListener('click', this.togglePlayPause.bind(this));
@@ -20,7 +25,17 @@ class GameView {
 
   start() {
     this.setupControlPanel();
+    this.setupCanvasInteractivity();
     this.animate();
+  }
+
+  toggleAliveDead(e) {
+    e.preventDefault();
+
+    if (this.paused) {
+      this.game.toggleAliveDead(e.clientX, e.clientY);
+      this.game.render(this.ctx);
+    }
   }
 
   togglePlayPause(e) {

@@ -21,6 +21,10 @@ class Cell {
     const yPos = this.row * this.cellSize;
     ctx.fillRect(xPos, yPos, this.cellSize, this.cellSize);
   }
+
+  toggleAliveDead() {
+    this.isAlive = !this.isAlive;
+  }
 }
 
 module.exports = Cell;

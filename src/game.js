@@ -139,6 +139,12 @@ class Game {
         return false;
     }
   }
+
+  toggleAliveDead(clientX, clientY) {
+    const row = Math.floor(clientY / this.cellSize);
+    const col = Math.floor(clientX / this.cellSize);
+    this.grid[row][col].toggleAliveDead();
+  }
 }
 
 module.exports = Game;

@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
   canvasElement.width = windowWidth;
   canvasElement.height = windowHeight;
 
-  const ctx = canvasElement.getContext('2d');
   const game = new Game(windowWidth, windowHeight);
-  new GameView(game, ctx).start();
+  new GameView(game, canvasElement).start();
 });
