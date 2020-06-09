@@ -11,11 +11,11 @@ class Cell {
     return new Cell(row, col, cellSize, isAlive);
   }
 
-  render(ctx) {
+  render(ctx, colorAlive, colorDead) {
     if (this.isAlive) {
-      ctx.fillStyle = '#ffc0cb';
+      ctx.fillStyle = colorAlive;
     } else {
-      ctx.fillStyle = '#c0fff4';
+      ctx.fillStyle = colorDead;
     }
     const xPos = this.col * this.cellSize;
     const yPos = this.row * this.cellSize;

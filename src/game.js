@@ -1,4 +1,5 @@
 const Cell = require('./cell');
+const COLORS = require('./colors');
 
 class Game {
   constructor(windowWidth, windowHeight) {
@@ -6,6 +7,7 @@ class Game {
     this.numCols = Math.ceil(windowWidth / this.cellSize);
     this.numRows = Math.ceil(windowHeight / this.cellSize);
     this.grid = this.populateGrid();
+    this.colorScheme = this.randomColorScheme();
   }
 
   populateGrid() {
@@ -20,10 +22,19 @@ class Game {
     return grid;
   }
 
+  randomColorScheme() {
+    var colorIndex = Math.floor(Math.random() * COLORS.alive.length);
+    return {
+      colorAlive: COLORS.alive[colorIndex],
+      colorDead: COLORS.dead[colorIndex]
+    };
+  }
+
   render(ctx) {
+    const { colorAlive, colorDead } = this.colorScheme;
     for (let row = 0; row < this.numRows; row++) {
       for (let col = 0; col < this.numCols; col++) {
-        this.grid[row][col].render(ctx);
+        this.grid[row][col].render(ctx, colorAlive, colorDead);
       }
     }
   }
