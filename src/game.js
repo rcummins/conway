@@ -7,6 +7,10 @@ class Game {
     this.numCols = Math.ceil(windowWidth / this.cellSize);
     this.numRows = Math.ceil(windowHeight / this.cellSize);
     this.grid = this.populateGrid();
+    this.changeColors();
+  }
+
+  changeColors() {
     this.colorScheme = this.randomColorScheme();
   }
 

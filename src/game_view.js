@@ -14,13 +14,22 @@ class GameView {
     }
   }
 
+  changeColors(e) {
+    e.preventDefault();
+    this.game.changeColors();
+    this.game.render(this.ctx);
+  }
+
   setupCanvasInteractivity() {
     this.canvasElement.addEventListener('click', this.toggleAliveDead.bind(this));
   }
 
   setupControlPanel() {
     const playPauseButton = document.getElementById('play-pause');
+    const changeColorsButton = document.getElementById('change-colors');
+
     playPauseButton.addEventListener('click', this.togglePlayPause.bind(this));
+    changeColorsButton.addEventListener('click', this.changeColors.bind(this));
   }
 
   start() {
