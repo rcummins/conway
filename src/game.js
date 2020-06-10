@@ -23,11 +23,25 @@ class Game {
   }
 
   randomColorScheme() {
-    var colorIndex = Math.floor(Math.random() * COLORS.alive.length);
+    // check browser's localStorage to make sure the new color scheme is
+    // different from the previous color scheme
+    var previousColorIndex = localStorage.getItem('colorIndex');
+    var colorIndex = this.randomDifferentColorIndex(previousColorIndex);
+    localStorage.setItem('colorIndex', colorIndex);
+
+    // return an object containing complementary colors for live and dead cells
     return {
       colorAlive: COLORS.alive[colorIndex],
       colorDead: COLORS.dead[colorIndex]
     };
+  }
+
+  randomDifferentColorIndex(previousColorIndex = null) {
+    var indices = [...Array(COLORS.alive.length).keys()];
+    if (previousColorIndex !== null) {
+      indices.splice(previousColorIndex, 1);
+    }
+    return indices[Math.floor(Math.random()*indices.length)];
   }
 
   render(ctx) {
