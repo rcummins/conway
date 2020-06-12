@@ -4,20 +4,23 @@ class GameView {
     this.canvasElement = canvasElement;
     this.ctx = canvasElement.getContext('2d');
     this.paused = false;
+    this.animationTimeoutID = null;
   }
 
   animate() {
     if (!this.paused) {
       this.game.step();
       this.game.render(this.ctx);
-      setTimeout(this.animate.bind(this), 300);
+      this.animationTimeoutID = window.setTimeout(this.animate.bind(this), 300);
     }
   }
 
   changeColors(e) {
     e.preventDefault();
     this.game.changeColors();
-    this.game.render(this.ctx);
+    this.game.restart();
+    window.clearTimeout(this.animationTimeoutID);
+    this.animate();
   }
 
   setupCanvasInteractivity() {

@@ -57,6 +57,10 @@ class Game {
     }
   }
 
+  restart() {
+    this.grid = this.populateGrid();
+  }
+
   step() {
     // make an array of placeholder objects whose isAlive property matches that
     // of the cells in the first row of the grid, to store the current state
