@@ -18,14 +18,16 @@ class GameView {
   changeColors(e) {
     e.preventDefault();
     this.game.changeColors();
-    this.game.restart();
-    window.clearTimeout(this.animationTimeoutID);
-    this.animate();
+    this.restartGame();
   }
 
   changePixelSize(e) {
     var sliderValue = Number.parseInt(e.target.value, 10);
     this.game.changePixelSize(sliderValue);
+    this.restartGame();
+  }
+
+  restartGame() {
     this.game.restart();
     window.clearTimeout(this.animationTimeoutID);
     this.animate();
