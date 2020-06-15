@@ -11,13 +11,16 @@ button:hover {
   background-color: dimgray;
 }
 
+.buttons {
+  margin: 30px auto;
+}
+
 canvas {
   display: block;
 }
 
 .fancy-button {
   width: 130px;
-  margin: 30px auto;
   padding: 10px;
   color: white;
   background-color: gray;
@@ -39,4 +42,22 @@ form {
 h1 {
   font-size: 24px;
   margin: 10px auto;
+}
+
+label {
+  font-weight: 500;
+}
+
+.slider-with-label {
+  margin: 20px auto;
+}
+
+.slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider p {
+  margin: 0 5px;
 }
