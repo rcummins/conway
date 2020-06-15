@@ -23,14 +23,24 @@ class GameView {
     this.animate();
   }
 
+  changePixelSize(e) {
+    var sliderValue = Number.parseInt(e.target.value, 10);
+    this.game.changePixelSize(sliderValue);
+    this.game.restart();
+    window.clearTimeout(this.animationTimeoutID);
+    this.animate();
+  }
+
   setupCanvasInteractivity() {
     this.canvasElement.addEventListener('click', this.toggleAliveDead.bind(this));
   }
 
   setupControlPanel() {
+    const pixelSizeSlider = document.getElementById('pixel-size');
     const playPauseButton = document.getElementById('play-pause');
     const changeColorsButton = document.getElementById('change-colors');
 
+    pixelSizeSlider.addEventListener('change', this.changePixelSize.bind(this));
     playPauseButton.addEventListener('click', this.togglePlayPause.bind(this));
     changeColorsButton.addEventListener('click', this.changeColors.bind(this));
   }

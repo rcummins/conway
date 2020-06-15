@@ -3,15 +3,21 @@ const COLORS = require('./colors');
 
 class Game {
   constructor(windowWidth, windowHeight) {
-    this.cellSize = 20;
-    this.numCols = Math.ceil(windowWidth / this.cellSize);
-    this.numRows = Math.ceil(windowHeight / this.cellSize);
+    this.windowWidth = windowWidth;
+    this.windowHeight = windowHeight;
+    this.changePixelSize(25);
     this.grid = this.populateGrid();
     this.changeColors();
   }
 
   changeColors() {
     this.colorScheme = this.randomColorScheme();
+  }
+
+  changePixelSize(sliderValue) {
+    this.cellSize = Math.floor(sliderValue / (-0.16 * sliderValue + 9)) + 5;
+    this.numCols = Math.ceil(this.windowWidth / this.cellSize);
+    this.numRows = Math.ceil(this.windowHeight / this.cellSize);
   }
 
   populateGrid() {
