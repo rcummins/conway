@@ -5,13 +5,17 @@ class GameView {
     this.ctx = canvasElement.getContext('2d');
     this.paused = false;
     this.animationTimeoutID = null;
+    this.animationTimeStep = 150;
   }
 
   animate() {
     if (!this.paused) {
       this.game.step();
       this.game.render(this.ctx);
-      this.animationTimeoutID = window.setTimeout(this.animate.bind(this), 300);
+      this.animationTimeoutID = window.setTimeout(
+        this.animate.bind(this),
+        this.animationTimeStep
+      );
     }
   }
 
@@ -27,6 +31,12 @@ class GameView {
     this.restartGame();
   }
 
+  changeSimulationSpeed(e) {
+    var sliderValue = Number.parseInt(e.target.value, 10);
+    this.animationTimeStep = Math.floor(290 - 5 * sliderValue);
+    this.restartGame();
+  }
+
   restartGame() {
     this.game.restart();
     window.clearTimeout(this.animationTimeoutID);
@@ -39,10 +49,12 @@ class GameView {
 
   setupControlPanel() {
     const pixelSizeSlider = document.getElementById('pixel-size');
+    const speedSlider = document.getElementById('speed');
     const playPauseButton = document.getElementById('play-pause');
     const changeColorsButton = document.getElementById('change-colors');
 
     pixelSizeSlider.addEventListener('change', this.changePixelSize.bind(this));
+    speedSlider.addEventListener('change', this.changeSimulationSpeed.bind(this));
     playPauseButton.addEventListener('click', this.togglePlayPause.bind(this));
     changeColorsButton.addEventListener('click', this.changeColors.bind(this));
   }
