@@ -2,7 +2,7 @@ class GameView {
   constructor(game, canvasElement) {
     this.game = game;
     this.canvasElement = canvasElement;
-    this.ctx = canvasElement.getContext('2d');
+    this.ctx = canvasElement.getContext('2d', { alpha: false });
     this.paused = false;
     this.animationTimeoutID = null;
     this.animationTimeStep = 150;

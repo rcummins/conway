@@ -55,10 +55,14 @@ class Game {
   }
 
   render(ctx) {
-    const { colorAlive, colorDead } = this.colorScheme;
+    // draw a single background rectangle representing all the dead cells
+    ctx.fillStyle = this.colorScheme.colorDead;
+    ctx.fillRect(0, 0, this.windowWidth, this.windowHeight);
+
+    // call render on each cell. Only living cells will be drawn
     for (let row = 0; row < this.numRows; row++) {
       for (let col = 0; col < this.numCols; col++) {
-        this.grid[row][col].render(ctx, colorAlive, colorDead);
+        this.grid[row][col].render(ctx, this.colorScheme.colorAlive);
       }
     }
   }

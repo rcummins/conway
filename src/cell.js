@@ -11,15 +11,13 @@ class Cell {
     return new Cell(row, col, cellSize, isAlive);
   }
 
-  render(ctx, colorAlive, colorDead) {
+  render(ctx, colorAlive) {
     if (this.isAlive) {
       ctx.fillStyle = colorAlive;
-    } else {
-      ctx.fillStyle = colorDead;
+      const xPos = this.col * this.cellSize;
+      const yPos = this.row * this.cellSize;
+      ctx.fillRect(xPos, yPos, this.cellSize, this.cellSize);
     }
-    const xPos = this.col * this.cellSize;
-    const yPos = this.row * this.cellSize;
-    ctx.fillRect(xPos, yPos, this.cellSize, this.cellSize);
   }
 
   toggleAliveDead() {
