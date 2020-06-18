@@ -40,6 +40,7 @@ class GameView {
   restartGame() {
     this.game.restart();
     window.clearTimeout(this.animationTimeoutID);
+    this.paused = false;
     this.animate();
   }
 
