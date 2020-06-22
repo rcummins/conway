@@ -3,8 +3,6 @@ const game = new Game(500, 500);
 
 describe('step', () => {
   // first change all cells isAlive to false to overwrite random assignments
-  // const numRows = game.grid.length;
-  // const numCols = game.grid[0].length;
   for (let row = 0; row < game.numRows; row++) {
     for (let col = 0; col < game.numCols; col++) {
       game.grid[row][col].isAlive = false;

@@ -9,7 +9,7 @@ class Game {
     this.changePixelSize(25);
     this.grid = this.populateGrid();
     this.changeColors();
-    this.stepUtility = new StepUtility();
+    this.stepUtility = new StepUtility(this.numCols, this.numRows);
   }
 
   changeColors() {
@@ -20,6 +20,7 @@ class Game {
     this.cellSize = Math.floor(sliderValue / (-0.16 * sliderValue + 9)) + 5;
     this.numCols = Math.ceil(this.windowWidth / this.cellSize);
     this.numRows = Math.ceil(this.windowHeight / this.cellSize);
+    this.stepUtility = new StepUtility(this.numCols, this.numRows);
   }
 
   populateGrid() {
@@ -74,52 +75,7 @@ class Game {
   }
 
   step() {
-    // make an array of placeholder objects whose isAlive property matches that
-    // of the cells in the first row of the grid, to store the current state
-    // of the first row to use when calculating the next state of the last row
-    const firstRowBuffer = [];
-    for (let colIndex = 0; colIndex < this.numCols; colIndex++) {
-      firstRowBuffer.push({ isAlive: this.grid[0][colIndex].isAlive });
-    }
-
-    // set up the variables needed to loop through all the rows
-    const lastRowIndex = this.numRows - 1;
-    let currRowIsAlive = null;
-    let prevRowIsAlive = this.stepUtility.rowAliveNextStep(
-      this.grid[lastRowIndex],
-      this.grid[0],
-      this.grid[1]);
-
-    // loop through all rows except the first and last row
-    for (let rowIndex = 1; rowIndex < lastRowIndex; rowIndex++) {
-      // calculate isAlive property in the next step for cells in current row
-      currRowIsAlive = this.stepUtility.rowAliveNextStep(
-        this.grid[rowIndex - 1],
-        this.grid[rowIndex],
-        this.grid[rowIndex + 1]
-      );
-
-      // update the isAlive property for cells in the previous row
-      for (let colIndex = 0; colIndex < this.numCols; colIndex++) {
-        this.grid[rowIndex - 1][colIndex].isAlive = prevRowIsAlive[colIndex];
-      }
-
-      // save current row as prevRow so it can be updated in next interation
-      prevRowIsAlive = currRowIsAlive;
-    }
-
-    // calculate isAlive property in the next step for cells in the last row
-    currRowIsAlive = this.stepUtility.rowAliveNextStep(
-      this.grid[lastRowIndex - 1],
-      this.grid[lastRowIndex],
-      firstRowBuffer
-    );
-
-    // update the isAlive property for cells in the last two rows
-    for (let colIndex = 0; colIndex < this.numCols; colIndex++) {
-      this.grid[lastRowIndex - 1][colIndex].isAlive = prevRowIsAlive[colIndex];
-      this.grid[lastRowIndex][colIndex].isAlive = currRowIsAlive[colIndex];
-    }
+    this.stepUtility.step(this.grid);
   }
 
   toggleAliveDead(clientX, clientY) {

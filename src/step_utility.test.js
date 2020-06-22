@@ -1,5 +1,5 @@
 const StepUtility = require('./step_utility');
-const stepUtility = new StepUtility();
+const stepUtility = new StepUtility(500, 500);
 
 // initialize placeholder objects for dead and alive cells
 const deadCell = { isAlive: false };
