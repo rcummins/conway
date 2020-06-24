@@ -26,13 +26,13 @@ class GameView {
   }
 
   changePixelSize(e) {
-    var sliderValue = Number.parseInt(e.target.value, 10);
+    var sliderValue = e.target.valueAsNumber;
     this.game.changePixelSize(sliderValue);
     this.restartGame();
   }
 
   changeSimulationSpeed(e) {
-    var sliderValue = Number.parseInt(e.target.value, 10);
+    var sliderValue = e.target.valueAsNumber;
     this.animationTimeStep = Math.floor(290 - 5 * sliderValue);
     this.restartGame();
   }
