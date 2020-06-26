@@ -1,15 +1,18 @@
 const Cell = require('./cell');
 const COLORS = require('./colors');
 const StepUtility = require('./step_utility');
+const SeedUtility = require('./seed_utility');
 
 class Game {
   constructor(windowWidth, windowHeight) {
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
-    this.changePixelSize(25);
-    this.grid = this.populateGrid();
     this.changeColors();
+    this.changePixelSize(25);
+    this.changeSeedPattern('random');
+    this.grid = this.populateGrid();
     this.stepUtility = new StepUtility(this.numCols, this.numRows);
+    this.seedUtility = new SeedUtility(this.numCols, this.numRows);
   }
 
   changeColors() {
@@ -21,15 +24,33 @@ class Game {
     this.numCols = Math.ceil(this.windowWidth / this.cellSize);
     this.numRows = Math.ceil(this.windowHeight / this.cellSize);
     this.stepUtility = new StepUtility(this.numCols, this.numRows);
+    this.seedUtility = new SeedUtility(this.numCols, this.numRows);
+  }
+
+  changeSeedPattern(newSeedPattern) {
+    this.seedPattern = newSeedPattern;
   }
 
   populateGrid() {
     const grid = Array.from(new Array(this.numRows), () => []);
 
-    for (let row = 0; row < this.numRows; row++) {
-      for (let col = 0; col < this.numCols; col++) {
-        grid[row].push(Cell.newRandomCell(row, col, this.cellSize));
+    if (this.seedPattern === 'random') {
+      // fill grid with cells that are randomly initialized as alive or dead
+      for (let row = 0; row < this.numRows; row++) {
+        for (let col = 0; col < this.numCols; col++) {
+          grid[row].push(Cell.newRandomCell(row, col, this.cellSize));
+        }
       }
+    } else {
+      // fill grid with dead cells
+      for (let row = 0; row < this.numRows; row++) {
+        for (let col = 0; col < this.numCols; col++) {
+          grid[row].push(new Cell(row, col, this.cellSize, false));
+        }
+      }
+
+      // change certain cells to alive to initialize the pattern
+      this.seedUtility[this.seedPattern](grid);
     }
 
     return grid;
