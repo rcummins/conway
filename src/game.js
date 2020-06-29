@@ -48,7 +48,7 @@ class Game {
       }
 
       // change certain cells to alive to initialize the pattern
-      this.seedUtility[this.seedPattern](grid);
+      this.seedUtility.initializePattern(grid, this.seedPattern);
     }
 
     return grid;
