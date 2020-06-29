@@ -1,12 +1,9 @@
 class SeedUtility {
-  constructor(numCols, numRows) {
-    this.numCols = numCols;
-    this.numRows = numRows;
-  }
-
   gliders(grid) {
-    for (let row = 0; row <= this.numRows - 5; row += 5) {
-      for (let col = 0; col <= this.numCols - 5; col += 5) {
+    const numRows = grid.length;
+    const numCols = grid[0].length;
+    for (let row = 0; row <= numRows - 5; row += 5) {
+      for (let col = 0; col <= numCols - 5; col += 5) {
         if (Math.random() < 0.3) { // approx. 30% of canvas filled with gliders
           grid[row + 1][col + 2].isAlive = true;
           grid[row + 2][col + 3].isAlive = true;
@@ -19,8 +16,10 @@ class SeedUtility {
   }
 
   galaxies(grid) {
-    for (let row = 0; row <= this.numRows - 15; row += 15) {
-      for (let col = 0; col <= this.numCols - 15; col += 15) {
+    const numRows = grid.length;
+    const numCols = grid[0].length;
+    for (let row = 0; row <= numRows - 15; row += 15) {
+      for (let col = 0; col <= numCols - 15; col += 15) {
         if (Math.random() < 0.3) { // approx. 30% of canvas filled with galaxies
           grid[row + 3][col + 3].isAlive = true;
           grid[row + 3][col + 4].isAlive = true;
@@ -76,8 +75,10 @@ class SeedUtility {
   }
 
   pulsars(grid) {
-    for (let row = 0; row <= this.numRows - 17; row += 17) {
-      for (let col = 0; col <= this.numCols - 17; col += 17) {
+    const numRows = grid.length;
+    const numCols = grid[0].length;
+    for (let row = 0; row <= numRows - 17; row += 17) {
+      for (let col = 0; col <= numCols - 17; col += 17) {
         if (Math.random() < 0.3) { // approx. 30% of canvas filled with pulsars
           grid[row + 2][col + 4].isAlive = true;
           grid[row + 2][col + 5].isAlive = true;

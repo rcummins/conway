@@ -1,20 +1,19 @@
 class StepUtility {
-  constructor(numCols, numRows) {
-    this.numCols = numCols;
-    this.numRows = numRows;
-  }
-
   step(grid) {
+    // get the dimensions of the grid
+    const numRows = grid.length;
+    const numCols = grid[0].length;
+
     // make an array of placeholder objects whose isAlive property matches that
     // of the cells in the first row of the grid, to store the current state
     // of the first row to use when calculating the next state of the last row
     const firstRowBuffer = [];
-    for (let colIndex = 0; colIndex < this.numCols; colIndex++) {
+    for (let colIndex = 0; colIndex < numCols; colIndex++) {
       firstRowBuffer.push({ isAlive: grid[0][colIndex].isAlive });
     }
 
     // set up the variables needed to loop through all the rows
-    const lastRowIndex = this.numRows - 1;
+    const lastRowIndex = numRows - 1;
     let currRowIsAlive = null;
     let prevRowIsAlive = this.rowAliveNextStep(
       grid[lastRowIndex],
@@ -31,7 +30,7 @@ class StepUtility {
       );
 
       // update the isAlive property for cells in the previous row
-      for (let colIndex = 0; colIndex < this.numCols; colIndex++) {
+      for (let colIndex = 0; colIndex < numCols; colIndex++) {
         grid[rowIndex - 1][colIndex].isAlive = prevRowIsAlive[colIndex];
       }
 
@@ -47,7 +46,7 @@ class StepUtility {
     );
 
     // update the isAlive property for cells in the last two rows
-    for (let colIndex = 0; colIndex < this.numCols; colIndex++) {
+    for (let colIndex = 0; colIndex < numCols; colIndex++) {
       grid[lastRowIndex - 1][colIndex].isAlive = prevRowIsAlive[colIndex];
       grid[lastRowIndex][colIndex].isAlive = currRowIsAlive[colIndex];
     }
