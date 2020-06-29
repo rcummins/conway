@@ -26,9 +26,17 @@ class GameView {
   }
 
   changePixelSize(e) {
+    e.preventDefault();
     var sliderValue = e.target.valueAsNumber;
     this.game.changePixelSize(sliderValue);
     this.restartGame();
+  }
+
+  changeSeedPattern(e) {
+    if (e.target.value && e.target.value !== this.game.seedPattern) {
+      this.game.changeSeedPattern(e.target.value);
+      this.restartGame();
+    }
   }
 
   changeSimulationSpeed(e) {
@@ -51,11 +59,13 @@ class GameView {
   setupControlPanel() {
     const pixelSizeSlider = document.getElementById('pixel-size');
     const speedSlider = document.getElementById('speed');
+    const seedPatternRadio = document.getElementById('seed-pattern');
     const playPauseButton = document.getElementById('play-pause');
     const changeColorsButton = document.getElementById('change-colors');
 
     pixelSizeSlider.addEventListener('change', this.changePixelSize.bind(this));
     speedSlider.addEventListener('change', this.changeSimulationSpeed.bind(this));
+    seedPatternRadio.addEventListener('click', this.changeSeedPattern.bind(this));
     playPauseButton.addEventListener('click', this.togglePlayPause.bind(this));
     changeColorsButton.addEventListener('click', this.changeColors.bind(this));
   }
