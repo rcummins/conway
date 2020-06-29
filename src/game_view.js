@@ -33,10 +33,8 @@ class GameView {
   }
 
   changeSeedPattern(e) {
-    if (e.target.value && e.target.value !== this.game.seedPattern) {
-      this.game.changeSeedPattern(e.target.value);
-      this.restartGame();
-    }
+    this.game.changeSeedPattern(e.target.value);
+    this.restartGame();
   }
 
   changeSimulationSpeed(e) {
@@ -65,7 +63,7 @@ class GameView {
 
     pixelSizeSlider.addEventListener('change', this.changePixelSize.bind(this));
     speedSlider.addEventListener('change', this.changeSimulationSpeed.bind(this));
-    seedPatternRadio.addEventListener('click', this.changeSeedPattern.bind(this));
+    seedPatternRadio.addEventListener('change', this.changeSeedPattern.bind(this));
     playPauseButton.addEventListener('click', this.togglePlayPause.bind(this));
     changeColorsButton.addEventListener('click', this.changeColors.bind(this));
   }
