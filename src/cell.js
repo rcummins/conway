@@ -6,11 +6,6 @@ class Cell {
     this.isAlive = isAlive;
   }
 
-  static newRandomCell(row, col, cellSize) {
-    const isAlive = Math.random() < 0.2; // on average, 20% of cells will be alive
-    return new Cell(row, col, cellSize, isAlive);
-  }
-
   render(ctx, colorAlive) {
     if (this.isAlive) {
       ctx.fillStyle = colorAlive;

@@ -3,12 +3,14 @@ class SeedUtility {
     this.occurrenceFrequency = {
       galaxies: 0.3,
       gliders: 0.3,
-      pulsars: 0.3
+      pulsars: 0.3,
+      random: 0.2
     };
     this.patternSize = {
       galaxies: 15,
       gliders: 5,
-      pulsars: 17
+      pulsars: 17,
+      random: 1
     };
     this.rowOffsets = {
       galaxies: [3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6,
@@ -17,7 +19,8 @@ class SeedUtility {
       gliders: [1, 2, 3, 3, 3],
       pulsars: [2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7,
         7, 7, 7, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12,
-        12, 14, 14, 14, 14, 14, 14]
+        12, 14, 14, 14, 14, 14, 14],
+      random: [0]
     };
     this.colOffsets = {
       galaxies: [3, 4, 6, 7, 8, 9, 10, 11, 3, 4, 6, 7, 8, 9, 10, 11, 3, 4, 3, 4,
@@ -26,7 +29,8 @@ class SeedUtility {
       gliders: [2, 3, 1, 2, 3],
       pulsars: [4, 5, 6, 10, 11, 12, 2, 7, 9, 14, 2, 7, 9, 14, 2, 7, 9, 14, 4,
         5, 6, 10, 11, 12, 4, 5, 6, 10, 11, 12, 2, 7, 9, 14, 2, 7, 9, 14, 2, 7,
-        9, 14, 4, 5, 6, 10, 11, 12]
+        9, 14, 4, 5, 6, 10, 11, 12],
+      random: [0]
     };
   }
 

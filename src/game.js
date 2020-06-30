@@ -7,12 +7,12 @@ class Game {
   constructor(windowWidth, windowHeight) {
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
+    this.stepUtility = new StepUtility();
+    this.seedUtility = new SeedUtility();
     this.changeColors();
     this.changePixelSize(25);
     this.changeSeedPattern('random');
-    this.grid = this.populateGrid();
-    this.stepUtility = new StepUtility();
-    this.seedUtility = new SeedUtility();
+    this.populateGrid();
   }
 
   changeColors() {
@@ -30,28 +30,17 @@ class Game {
   }
 
   populateGrid() {
-    const grid = Array.from(new Array(this.numRows), () => []);
+    this.grid = Array.from(new Array(this.numRows), () => []);
 
-    if (this.seedPattern === 'random') {
-      // fill grid with cells that are randomly initialized as alive or dead
-      for (let row = 0; row < this.numRows; row++) {
-        for (let col = 0; col < this.numCols; col++) {
-          grid[row].push(Cell.newRandomCell(row, col, this.cellSize));
-        }
+    // fill grid with dead cells
+    for (let row = 0; row < this.numRows; row++) {
+      for (let col = 0; col < this.numCols; col++) {
+        this.grid[row].push(new Cell(row, col, this.cellSize, false));
       }
-    } else {
-      // fill grid with dead cells
-      for (let row = 0; row < this.numRows; row++) {
-        for (let col = 0; col < this.numCols; col++) {
-          grid[row].push(new Cell(row, col, this.cellSize, false));
-        }
-      }
-
-      // change certain cells to alive to initialize the pattern
-      this.seedUtility.initializePattern(grid, this.seedPattern);
     }
 
-    return grid;
+    // change certain cells to alive to initialize the pattern
+    this.seedUtility.initializePattern(this.grid, this.seedPattern);
   }
 
   randomColorScheme() {
@@ -90,7 +79,7 @@ class Game {
   }
 
   restart() {
-    this.grid = this.populateGrid();
+    this.populateGrid();
   }
 
   step() {
