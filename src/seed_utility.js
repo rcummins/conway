@@ -37,12 +37,16 @@ class SeedUtility {
     const patternSize = this.patternSize[seedPattern];
     const rowOffsets = this.rowOffsets[seedPattern];
     const colOffsets = this.colOffsets[seedPattern];
+    let totalPatternsInitialized = 0;
 
-    for (let row = 0; row <= numRows - patternSize; row += patternSize) {
-      for (let col = 0; col <= numCols - patternSize; col += patternSize) {
-        if (Math.random() < occurrenceFrequency) {
-          for (let i = 0; i < rowOffsets.length; i++) {
-            grid[row + rowOffsets[i]][col + colOffsets[i]].isAlive = true;
+    while (totalPatternsInitialized === 0) {
+      for (let row = 0; row <= numRows - patternSize; row += patternSize) {
+        for (let col = 0; col <= numCols - patternSize; col += patternSize) {
+          if (Math.random() < occurrenceFrequency) {
+            totalPatternsInitialized += 1;
+            for (let i = 0; i < rowOffsets.length; i++) {
+              grid[row + rowOffsets[i]][col + colOffsets[i]].isAlive = true;
+            }
           }
         }
       }
