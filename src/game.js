@@ -1,16 +1,18 @@
 const Cell = require('./cell');
 const COLORS = require('./colors');
-const StepUtility = require('./step_utility');
 const SeedUtility = require('./seed_utility');
+const SizeUtility = require('./size_utility');
+const StepUtility = require('./step_utility');
 
 class Game {
   constructor(windowWidth, windowHeight) {
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
-    this.stepUtility = new StepUtility();
     this.seedUtility = new SeedUtility();
+    this.sizeUtility = new SizeUtility(windowWidth, windowHeight);
+    this.stepUtility = new StepUtility();
     this.changeColors();
-    this.changePixelSize(25);
+    this.changePixelSize(this.sizeUtility.sliderHalfwayValue);
     this.changeSeedPattern('random');
     this.populateGrid();
   }
@@ -20,7 +22,7 @@ class Game {
   }
 
   changePixelSize(sliderValue) {
-    this.cellSize = Math.floor(sliderValue / (-0.16 * sliderValue + 9)) + 5;
+    this.cellSize = this.sizeUtility.calculateCellSize(sliderValue);
     this.numCols = Math.ceil(this.windowWidth / this.cellSize);
     this.numRows = Math.ceil(this.windowHeight / this.cellSize);
   }
