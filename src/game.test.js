@@ -1,5 +1,5 @@
 const Game = require('./game');
-const game = new Game(400, 400);
+const game = new Game(300, 300);
 
 describe('step', () => {
   // first change all cells isAlive to false to overwrite random assignments

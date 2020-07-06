@@ -1,9 +1,15 @@
 class SeedUtility {
   constructor() {
+    this.minBorderSize = {
+      galaxies: 15,
+      gliders: 9,
+      pulsars: 13,
+      random: 0
+    };
     this.occurrenceFrequency = {
-      galaxies: 0.3,
-      gliders: 0.3,
-      pulsars: 0.3,
+      galaxies: 0.8,
+      gliders: 0.6,
+      pulsars: 0.6,
       random: 0.2
     };
     this.patternPeriod = {
@@ -103,29 +109,52 @@ class SeedUtility {
   }
 
   initializePattern(grid, seedPattern) {
+    // save the number of rows and columns in the grid
     const numRows = grid.length;
     const numCols = grid[0].length;
+
+    // save the parameters that are specific to this seed pattern
     const occurrenceFrequency = this.occurrenceFrequency[seedPattern];
     const patternPeriod = this.patternPeriod[seedPattern];
     const patternSize = this.patternSize[seedPattern];
+    const minBorderSize = this.minBorderSize[seedPattern];
     const rowOffsets = this.rowOffsets[seedPattern];
     const colOffsets = this.colOffsets[seedPattern];
+
+    // calculate size of rectangle within which each pattern is randomly shifted
+    const rectMinSize =  patternSize + minBorderSize;
+    const rectRows = Math.floor(numRows / Math.floor(numRows / rectMinSize));
+    const rectCols = Math.floor(numCols / Math.floor(numCols / rectMinSize));
+    const patternBorderRows = rectRows - patternSize;
+    const patternBorderCols = rectCols - patternSize;
+
+    // initialize variables that are changed inside the nested loops
     let canvasEmpty = true;
-    let t = null;
+    let state = null;
+    let rowShift = null;
+    let colShift = null;
+    let rowFinal = null;
+    let colFinal = null;
 
     while (canvasEmpty) {
-      for (let row = 0; row <= numRows - patternSize; row += patternSize) {
-        for (let col = 0; col <= numCols - patternSize; col += patternSize) {
+      for (let row = 0; row <= numRows - rectRows; row += rectRows) {
+        for (let col = 0; col <= numCols - rectCols; col += rectCols) {
           if (Math.random() < occurrenceFrequency) {
             // record that canvas is no longer empty, so we can stop outer loop
             canvasEmpty = false;
 
             // randomly choose among the different evolutionary states
-            t = Math.floor(Math.random() * patternPeriod);
+            state = Math.floor(Math.random() * patternPeriod);
+
+            // randomly shift pattern within rectangle (rectRows by rectCols)
+            rowShift = Math.floor(Math.random() * (patternBorderRows + 1));
+            colShift = Math.floor(Math.random() * (patternBorderCols + 1));
 
             // set certain cells to alive to initialize pattern
-            for (let i = 0; i < rowOffsets[t].length; i++) {
-              grid[row+rowOffsets[t][i]][col+colOffsets[t][i]].isAlive = true;
+            for (let i = 0; i < rowOffsets[state].length; i++) {
+              rowFinal = row + rowOffsets[state][i] + rowShift;
+              colFinal = col + colOffsets[state][i] + colShift;
+              grid[rowFinal][colFinal].isAlive = true;
             }
           }
         }

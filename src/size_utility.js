@@ -8,13 +8,13 @@ class SizeUtility {
     this.sliderMaxValue = 50;
     this.sliderHalfwayValue = (this.sliderMaxValue - this.sliderMinValue) / 2;
 
-    // There must never be fewer than 20 rows or 20 columns in the grid,
+    // There must never be fewer than 30 rows or 30 columns in the grid,
     // otherwise the largest pattern will not fit in the grid
-    this.minNumCellsShortestDim = 20;
+    this.minNumCellsShortestDim = 30;
 
     // Ideally, cells will never be smaller than 5 pixels by 5 pixels, but
     // if the window is small enough, this requirement is relaxed so that
-    // there will never be fewer than 20 rows or 20 columns in the grid
+    // there will never be fewer than 30 rows or 30 columns in the grid
     this.minCellSize = 5;
 
     // The length of the shortest window dimension
@@ -29,9 +29,12 @@ class SizeUtility {
 
   calculateCellSize(sliderValue) {
     // Calculate the number of rows or columns along the shortest window
-    // dimension, and make sure that it is not less than 20
+    // dimension, and make sure that it is not less than 30
     var numCellsPrelim = sliderValue * this.slope + this.maxNumCellsShortestDim;
-    var numCellsShortestDimFinal = Math.max(20, numCellsPrelim);
+    var numCellsShortestDimFinal = Math.max(
+      this.minNumCellsShortestDim,
+      numCellsPrelim
+    );
 
     // Calculate the cell size based on the length of the shortest window
     // dimension and the number of cells along that dimension, and round down
@@ -39,7 +42,7 @@ class SizeUtility {
     // We want to round the cell size to an integer value because rendering
     // canvas objects with fractional pixel coordinates slows down the browser.
     // We want to round the cell size down (not up) so that there are never
-    // fewer than 20 rows or columns along the shortest window dimension.
+    // fewer than 30 rows or columns along the shortest window dimension.
     return Math.floor(this.shortestDimLength / numCellsShortestDimFinal);
   }
 
