@@ -1,17 +1,8 @@
-a {
-  color: dimgray;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
 button:hover {
   background-color: dimgray;
 }
 
-.buttons {
+.buttons-div {
   margin: 30px auto;
 }
 
@@ -46,6 +37,15 @@ form {
 h1 {
   font-size: 24px;
   margin: 10px auto;
+}
+
+.portfolio-link {
+  color: dimgray;
+  text-decoration: none;
+}
+
+.portfolio-link:hover {
+  text-decoration: underline;
 }
 
 .radio-with-title {
