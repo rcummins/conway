@@ -3,7 +3,7 @@ button:hover {
 }
 
 .buttons-div {
-  margin: 30px auto;
+  margin: 20px auto;
 }
 
 canvas {
@@ -12,6 +12,12 @@ canvas {
 
 .control-title {
   font-weight: 500;
+}
+
+.description {
+  margin: 20px;
+  font-size: 14px;
+  text-align: left;
 }
 
 .fancy-button {
