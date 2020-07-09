@@ -3,7 +3,7 @@ class SizeUtility {
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
 
-    // Minimum and maximum values of the range input element for pixel size
+    // Minimum and maximum values of the range input element for cell size
     this.sliderMinValue = 0;
     this.sliderMaxValue = 50;
     this.sliderHalfwayValue = (this.sliderMaxValue - this.sliderMinValue) / 2;

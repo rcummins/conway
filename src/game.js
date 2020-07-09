@@ -12,7 +12,7 @@ class Game {
     this.sizeUtility = new SizeUtility(windowWidth, windowHeight);
     this.stepUtility = new StepUtility();
     this.changeColors();
-    this.changePixelSize(this.sizeUtility.sliderHalfwayValue);
+    this.changeCellSize(this.sizeUtility.sliderHalfwayValue);
     this.changeSeedPattern('random');
     this.populateGrid();
   }
@@ -21,7 +21,7 @@ class Game {
     this.colorScheme = this.randomColorScheme();
   }
 
-  changePixelSize(sliderValue) {
+  changeCellSize(sliderValue) {
     this.cellSize = this.sizeUtility.calculateCellSize(sliderValue);
     this.numCols = Math.ceil(this.windowWidth / this.cellSize);
     this.numRows = Math.ceil(this.windowHeight / this.cellSize);
