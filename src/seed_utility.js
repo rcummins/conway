@@ -121,14 +121,18 @@ class SeedUtility {
     const rowOffsets = this.rowOffsets[seedPattern];
     const colOffsets = this.colOffsets[seedPattern];
 
-    // calculate size of rectangle within which each pattern is randomly shifted
+    // calculate min size of rectangle within which pattern is randomly shifted
     const rectMinSize =  patternSize + minBorderSize;
-    const rectRows = Math.floor(numRows / Math.floor(numRows / rectMinSize));
-    const rectCols = Math.floor(numCols / Math.floor(numCols / rectMinSize));
-    const patternBorderRows = rectRows - patternSize;
-    const patternBorderCols = rectCols - patternSize;
+    const numRectsRowDir = Math.floor(numRows / rectMinSize);
+    const numRectsColDir = Math.floor(numCols / rectMinSize);
 
     // initialize variables that are changed inside the nested loops
+    let startRow = null;
+    let rowsInRect = null;
+    let extraRowsInRect = null;
+    let startCol = null;
+    let colsInRect = null;
+    let extraColsInRect = null;
     let canvasEmpty = true;
     let state = null;
     let rowShift = null;
@@ -137,8 +141,22 @@ class SeedUtility {
     let colFinal = null;
 
     while (canvasEmpty) {
-      for (let row = 0; row <= numRows - rectRows; row += rectRows) {
-        for (let col = 0; col <= numCols - rectCols; col += rectCols) {
+      for (let rectRow = 0; rectRow < numRectsRowDir; rectRow++) {
+        // calculate the row where this rectangle starts
+        startRow = Math.floor(rectRow * numRows / numRectsRowDir);
+
+        // calculate the extra rows within this rectangle
+        rowsInRect = Math.floor((rectRow+1)*numRows/numRectsRowDir) - startRow;
+        extraRowsInRect = rowsInRect - patternSize;
+
+        for (let rectCol = 0; rectCol < numRectsColDir; rectCol++) {
+          // calculate the column where this rectangle starts
+          startCol = Math.floor(rectCol * numCols / numRectsColDir);
+
+          // calculate the extra columns within this rectangle
+          colsInRect = Math.floor((rectCol+1)*numCols/numRectsColDir) - startCol;
+          extraColsInRect = colsInRect - patternSize;
+
           if (Math.random() < occurrenceFrequency) {
             // record that canvas is no longer empty, so we can stop outer loop
             canvasEmpty = false;
@@ -146,14 +164,14 @@ class SeedUtility {
             // randomly choose among the different evolutionary states
             state = Math.floor(Math.random() * patternPeriod);
 
-            // randomly shift pattern within rectangle (rectRows by rectCols)
-            rowShift = Math.floor(Math.random() * (patternBorderRows + 1));
-            colShift = Math.floor(Math.random() * (patternBorderCols + 1));
+            // randomly shift pattern within rectangle
+            rowShift = Math.floor(Math.random() * (extraRowsInRect + 1));
+            colShift = Math.floor(Math.random() * (extraColsInRect + 1));
 
             // set certain cells to alive to initialize pattern
             for (let i = 0; i < rowOffsets[state].length; i++) {
-              rowFinal = row + rowOffsets[state][i] + rowShift;
-              colFinal = col + colOffsets[state][i] + colShift;
+              rowFinal = startRow + rowOffsets[state][i] + rowShift;
+              colFinal = startCol + colOffsets[state][i] + colShift;
               grid[rowFinal][colFinal].isAlive = true;
             }
           }
