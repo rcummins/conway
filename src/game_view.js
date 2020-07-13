@@ -9,14 +9,12 @@ class GameView {
   }
 
   animate() {
-    if (!this.paused) {
-      this.game.step();
-      this.game.render(this.ctx);
-      this.animationTimeoutID = window.setTimeout(
-        this.animate.bind(this),
-        this.animationTimeStep
-      );
-    }
+    this.game.step();
+    this.game.render(this.ctx);
+    this.animationTimeoutID = window.setTimeout(
+      this.animate.bind(this),
+      this.animationTimeStep
+    );
   }
 
   changeColors(e) {
@@ -91,6 +89,7 @@ class GameView {
       this.animate();
     } else {
       this.paused = true;
+      window.clearTimeout(this.animationTimeoutID);
     }
   }
 }
