@@ -29,13 +29,29 @@ I decreased the rendering lag by 90% by drawing a single background rectangle co
 
 Users can choose to initialize the game with one of four seed patterns:
 
-* **Random:** Each cell is randomly selected to be initialized as living or dead, with a 20% chance that any given cell will be initialized as living. This causes the game to be mostly chaotic, although some organized patterns do spontaneously emerge by chance.
+#### Random
 
-* **Gliders:** Gliders are classified as spaceship type patterns because they translate themselves across the grid. Gliders consist of five living cells that can be initialized in four different configurations.
+Each cell is randomly selected to be initialized as living or dead, with a 20% chance that any given cell will be initialized as living. This causes the game to be mostly chaotic, although some organized patterns do spontaneously emerge by chance.
 
-* **Pulsars:** Pulsars are classified as oscillator type patterns because they return to their initial state every n generations. Pulsars have a period of 3 generations.
+![Game of life initialized with random cells alive](gif/random.gif)
 
-* **Kok's galaxies:** Kok's galaxies are my favorite pattern! They are also classified as oscillator type patterns, with a period of 8 generations. This pattern was discovered by Jan Kok in 1971.
+#### Gliders
+
+Gliders are classified as spaceship type patterns because they translate themselves across the grid. Gliders consist of five living cells that can be initialized in four different configurations.
+
+![Game of life initialized with glider patterns](gif/gliders.gif)
+
+#### Pulsars
+
+Pulsars are classified as oscillator type patterns because they return to their initial state every n generations. Pulsars have a period of 3 generations.
+
+![Game of life initialized with pulsar patterns](gif/pulsars.gif)
+
+#### Kok's galaxies
+
+Kok's galaxies are my favorite pattern! They are also classified as oscillator type patterns, with a period of 8 generations. This pattern was discovered by Jan Kok in 1971.
+
+![Game of life initialized with Kok's galaxy patterns](gif/galaxies.gif)
 
 ### Random placement of patterns
 
