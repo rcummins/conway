@@ -15,15 +15,15 @@ class StepUtility {
     // set up the variables needed to loop through all the rows
     const lastRowIndex = numRows - 1;
     let currRowIsAlive = null;
-    let prevRowIsAlive = this.rowAliveNextStep(
+    let prevRowIsAlive = this.rowAliveNextGen(
       grid[lastRowIndex],
       grid[0],
       grid[1]);
 
     // loop through all rows except the first and last row
     for (let rowIndex = 1; rowIndex < lastRowIndex; rowIndex++) {
-      // calculate isAlive property in the next step for cells in current row
-      currRowIsAlive = this.rowAliveNextStep(
+      // calculate isAlive property in next generation for cells in current row
+      currRowIsAlive = this.rowAliveNextGen(
         grid[rowIndex - 1],
         grid[rowIndex],
         grid[rowIndex + 1]
@@ -34,12 +34,12 @@ class StepUtility {
         grid[rowIndex - 1][colIndex].isAlive = prevRowIsAlive[colIndex];
       }
 
-      // save current row as prevRow so it can be updated in next interation
+      // save current row as prevRow so it can be updated in next iteration
       prevRowIsAlive = currRowIsAlive;
     }
 
-    // calculate isAlive property in the next step for cells in the last row
-    currRowIsAlive = this.rowAliveNextStep(
+    // calculate isAlive property in next generation for cells in the last row
+    currRowIsAlive = this.rowAliveNextGen(
       grid[lastRowIndex - 1],
       grid[lastRowIndex],
       firstRowBuffer
@@ -52,36 +52,36 @@ class StepUtility {
     }
   }
 
-  rowAliveNextStep(rowAbove, rowTarget, rowBelow) {
+  rowAliveNextGen(rowAbove, rowTarget, rowBelow) {
     // get the index of the last cell in a row
     const lastIdx = rowAbove.length - 1;
 
     // initialize an array to store whether cells will be alive (true/false)
-    const aliveNextStep = [];
+    const aliveNextGen = [];
 
-    // determine if the left-edge cell will be alive in the next step
+    // determine if the left-edge cell will be alive in the next generation
     // due to edge wrapping, this depends on last column and first two columns
-    aliveNextStep.push(
-      this.cellAliveNextStep(rowAbove, rowTarget, rowBelow, lastIdx, 0, 1)
+    aliveNextGen.push(
+      this.cellAliveNextGen(rowAbove, rowTarget, rowBelow, lastIdx, 0, 1)
     );
 
-    // determine if the non-edge cells will be alive in the next step
+    // determine if the non-edge cells will be alive in the next generation
     for (let i = 1; i < lastIdx; i++) {
-      aliveNextStep.push(
-        this.cellAliveNextStep(rowAbove, rowTarget, rowBelow, i - 1, i, i + 1)
+      aliveNextGen.push(
+        this.cellAliveNextGen(rowAbove, rowTarget, rowBelow, i - 1, i, i + 1)
       );
     }
 
-    // determine if the right-edge cell will be alive in the next step
+    // determine if the right-edge cell will be alive in the next generation
     // due to edge wrapping, this depends on last two columns and first column
-    aliveNextStep.push(
-      this.cellAliveNextStep(rowAbove, rowTarget, rowBelow, lastIdx - 1, lastIdx, 0)
+    aliveNextGen.push(
+      this.cellAliveNextGen(rowAbove, rowTarget, rowBelow, lastIdx - 1, lastIdx, 0)
     );
 
-    return aliveNextStep;
+    return aliveNextGen;
   }
 
-  cellAliveNextStep(rowAbove, rowTarget, rowBelow, idxLeft, idxTarget, idxRight) {
+  cellAliveNextGen(rowAbove, rowTarget, rowBelow, idxLeft, idxTarget, idxRight) {
     // identify the 9 cells in the neighborhood including target cell in center
     const neighborhood = [
       rowAbove[idxLeft],
@@ -104,7 +104,7 @@ class StepUtility {
       }
     }, 0);
 
-    // determine whether the target cell will be alive in the next step
+    // determine whether the target cell will be alive in the next generation
     switch (totalLiveCells) {
       case 3:
         return true;
