@@ -157,21 +157,22 @@ class SeedUtility {
           colsInRect = Math.floor((rectCol+1)*numCols/numRectsColDir) - startCol;
           extraColsInRect = colsInRect - patternSize;
 
+          // randomly choose whether or not to place a pattern in this rectangle
           if (Math.random() < occurrenceFrequency) {
-            // record that canvas is no longer empty, so we can stop outer loop
+            // canvas is no longer empty, so we can stop the outermost loop
             canvasEmpty = false;
-
-            // randomly choose among the different evolutionary states
-            state = Math.floor(Math.random() * patternPeriod);
 
             // randomly shift pattern within rectangle
             rowShift = Math.floor(Math.random() * (extraRowsInRect + 1));
             colShift = Math.floor(Math.random() * (extraColsInRect + 1));
 
+            // randomly choose among the different evolutionary states
+            state = Math.floor(Math.random() * patternPeriod);
+
             // set certain cells to alive to initialize pattern
             for (let i = 0; i < rowOffsets[state].length; i++) {
-              rowFinal = startRow + rowOffsets[state][i] + rowShift;
-              colFinal = startCol + colOffsets[state][i] + colShift;
+              rowFinal = startRow + rowShift + rowOffsets[state][i];
+              colFinal = startCol + colShift + colOffsets[state][i];
               grid[rowFinal][colFinal].isAlive = true;
             }
           }
