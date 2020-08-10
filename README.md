@@ -98,47 +98,27 @@ The locations of each cell's neighbors are important inputs when determining whe
 ```JavaScript
 // src/step_utility.js
 
-let prevRowIsAlive = this.rowAliveNextGen(
+// calculate isAlive property in next generation for cells in the first row
+// due to edge wrapping, this depends on last row and first two rows
+gridAliveNextGen.push(this.rowAliveNextGen(
   grid[lastRowIndex],
   grid[0],
-  grid[1]);
+  grid[1]
+));
 ```
 
-Instead of keeping two copies of the entire grid in memory, one to represent the current state and one to represent the next generation, I reduce memory usage by only updating one row of the grid at a time. Before I update the first row to reflect its state in the next generation, I need to use the current state of the cells in the first row to calculate whether the cells in the second row will be alive in the next generation. Then I update the first row to its state in the next generation, and save the calculated next generation state of the second row in a buffer so it can be used to update the second row in the next iteration of the loop:
-
-```JavaScript
-// src/step_utility.js
-
-// loop through all rows except the first and last row
-for (let rowIndex = 1; rowIndex < lastRowIndex; rowIndex++) {
-  // calculate isAlive property in next generation for cells in current row
-  currRowIsAlive = this.rowAliveNextGen(
-    grid[rowIndex - 1],
-    grid[rowIndex],
-    grid[rowIndex + 1]
-  );
-
-  // update the isAlive property for cells in the previous row
-  for (let colIndex = 0; colIndex < numCols; colIndex++) {
-    grid[rowIndex - 1][colIndex].isAlive = prevRowIsAlive[colIndex];
-  }
-
-  // save current row as prevRow so it can be updated in next iteration
-  prevRowIsAlive = currRowIsAlive;
-}
-```
-
-Finally, I need the current state of the first row to calculate the state of the last row in the next generation. Before I started updating the grid, I saved a copy of the current state of the first row in a variable called firstRowBuffer. I pass this buffer to the rowAliveNextGen() helper method:
+Similarly, to determine whether cells in the last row of the grid will be alive in the next generation, I pass the second-to-last row, last row, and the first row of the grid to the rowAliveNextGen() helper method:
 
 ```JavaScript
 // src/step_utility.js
 
 // calculate isAlive property in next generation for cells in the last row
-currRowIsAlive = this.rowAliveNextGen(
+// due to edge wrapping, this depends on last two rows and first row
+gridAliveNextGen.push(this.rowAliveNextGen(
   grid[lastRowIndex - 1],
   grid[lastRowIndex],
-  firstRowBuffer
-);
+  grid[0]
+));
 ```
 
 ## Future

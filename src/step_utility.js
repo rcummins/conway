@@ -4,51 +4,41 @@ class StepUtility {
     const numRows = grid.length;
     const numCols = grid[0].length;
 
-    // make an array of placeholder objects whose isAlive property matches that
-    // of the cells in the first row of the grid, to store the current state
-    // of the first row to use when calculating the next state of the last row
-    const firstRowBuffer = [];
-    for (let colIndex = 0; colIndex < numCols; colIndex++) {
-      firstRowBuffer.push({ isAlive: grid[0][colIndex].isAlive });
-    }
-
     // set up the variables needed to loop through all the rows
     const lastRowIndex = numRows - 1;
-    let currRowIsAlive = null;
-    let prevRowIsAlive = this.rowAliveNextGen(
+    const gridAliveNextGen = [];
+
+    // calculate isAlive property in next generation for cells in the first row
+    // due to edge wrapping, this depends on last row and first two rows
+    gridAliveNextGen.push(this.rowAliveNextGen(
       grid[lastRowIndex],
       grid[0],
-      grid[1]);
+      grid[1]
+    ));
 
     // loop through all rows except the first and last row
     for (let rowIndex = 1; rowIndex < lastRowIndex; rowIndex++) {
       // calculate isAlive property in next generation for cells in current row
-      currRowIsAlive = this.rowAliveNextGen(
+      gridAliveNextGen.push(this.rowAliveNextGen(
         grid[rowIndex - 1],
         grid[rowIndex],
         grid[rowIndex + 1]
-      );
-
-      // update the isAlive property for cells in the previous row
-      for (let colIndex = 0; colIndex < numCols; colIndex++) {
-        grid[rowIndex - 1][colIndex].isAlive = prevRowIsAlive[colIndex];
-      }
-
-      // save current row as prevRow so it can be updated in next iteration
-      prevRowIsAlive = currRowIsAlive;
+      ));
     }
 
     // calculate isAlive property in next generation for cells in the last row
-    currRowIsAlive = this.rowAliveNextGen(
+    // due to edge wrapping, this depends on last two rows and first row
+    gridAliveNextGen.push(this.rowAliveNextGen(
       grid[lastRowIndex - 1],
       grid[lastRowIndex],
-      firstRowBuffer
-    );
+      grid[0]
+    ));
 
-    // update the isAlive property for cells in the last two rows
-    for (let colIndex = 0; colIndex < numCols; colIndex++) {
-      grid[lastRowIndex - 1][colIndex].isAlive = prevRowIsAlive[colIndex];
-      grid[lastRowIndex][colIndex].isAlive = currRowIsAlive[colIndex];
+    // update all cells in the grid to reflect their state in next generation
+    for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
+      for (let colIndex = 0; colIndex < numCols; colIndex++) {
+        grid[rowIndex][colIndex].isAlive = gridAliveNextGen[rowIndex][colIndex];
+      }
     }
   }
 
