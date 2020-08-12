@@ -1,5 +1,5 @@
 # Conway's Game of Life
-See it live: [rcummins.com/Conway/](https://rcummins.com/conway/?utm_source=github&utm_medium=readme&utm_campaign=github)
+See it live: [rcummins.com/conway/](https://rcummins.com/conway/?utm_source=github&utm_medium=readme&utm_campaign=github)
 
 ## Tech inventory
 
