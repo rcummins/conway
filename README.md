@@ -1,6 +1,8 @@
 # Conway's Game of Life
 See it live: [rcummins.com/conway/](https://rcummins.com/conway/?utm_source=github&utm_medium=readme&utm_campaign=github)
 
+![Game of life preview](gif/preview.gif)
+
 ## Tech inventory
 
 * HTML5 Canvas API for drawing
