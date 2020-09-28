@@ -7,6 +7,7 @@ See it live: [rcummins.com/conway/](https://rcummins.com/conway/?utm_source=gith
 
 * HTML5 Canvas API for drawing
 * JavaScript OOP
+* Unit tested with Jest
 
 ## Description
 
